@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/KAE-dev/mcdonalds.svg?branch=master)](https://travis-ci.org/KAE-dev/mcdonalds) 
+[![Build Status](https://travis-ci.org/KAE-dev/mcdonalds.svg?branch=master)](https://travis-ci.org/KAE-dev/mcdonalds) [![codecov](https://codecov.io/gh/KAE-dev/mcdonalds/branch/master/graph/badge.svg)](https://codecov.io/gh/KAE-dev/mcdonalds)
