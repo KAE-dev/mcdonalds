@@ -1,6 +1,4 @@
 package ru.rosbank.javaschool.util;
-
-
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.LinkedList;
@@ -9,7 +7,6 @@ import java.util.Optional;
 
 public class SQLTemplate {
     public <T> List<T> queryForList(DataSource dataSource, String query, RowMapper<T> mapper) throws SQLException {
-        // нужно cast'ить, т.к. в противном случае компилятор не догадается, какой из методов мы вызваем
         return execute(dataSource, query, (Executable<List<T>>) resultSet -> {
             List<T> list = new LinkedList<>();
             while (resultSet.next()) {
@@ -67,7 +64,7 @@ public class SQLTemplate {
     private int execute(DataSource dataSource, String query) throws SQLException {
         try (
                 Connection connection = dataSource.getConnection();
-                Statement statement = connection.createStatement();
+                Statement statement = connection.createStatement()
         ) {
             return statement.executeUpdate(query);
         }
@@ -76,7 +73,7 @@ public class SQLTemplate {
     private int execute(DataSource dataSource, String query, PreparedStatementSetter setter) throws SQLException {
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = setter.set(connection.prepareStatement(query));
+                PreparedStatement statement = setter.set(connection.prepareStatement(query))
         ) {
             return statement.executeUpdate();
         }
@@ -86,7 +83,7 @@ public class SQLTemplate {
         try (
                 Connection connection = dataSource.getConnection();
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
+                ResultSet resultSet = statement.executeQuery(query)
         ) {
             return function.execute(resultSet);
         }
@@ -96,16 +93,17 @@ public class SQLTemplate {
         try (
                 Connection connection = dataSource.getConnection();
                 PreparedStatement statement = setter.set(connection.prepareStatement(query));
-                ResultSet resultSet = statement.executeQuery();
+                ResultSet resultSet = statement.executeQuery()
         ) {
             return function.execute(resultSet);
         }
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T executeWitId(DataSource dataSource, String query) throws SQLException {
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
         ) {
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -117,10 +115,11 @@ public class SQLTemplate {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T executeWithId(DataSource dataSource, String query, PreparedStatementSetter setter) throws SQLException {
         try (
                 Connection connection = dataSource.getConnection();
-                PreparedStatement statement = setter.set(connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS));
+                PreparedStatement statement = setter.set(connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS))
         ) {
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();

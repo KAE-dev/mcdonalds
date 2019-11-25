@@ -5,7 +5,6 @@ import ru.rosbank.javaschool.util.RowMapper;
 import ru.rosbank.javaschool.util.SQLTemplate;
 import ru.rosbank.javaschool.web.exception.DataAccessException;
 import ru.rosbank.javaschool.web.model.OrderPositionModel;
-import ru.rosbank.javaschool.web.model.ProductModel;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -30,14 +29,22 @@ public class OrderPositionRepositoryJdbcImpl implements OrderPositionRepository 
         this.template = template;
 
         try {
-            template.update(ds, "CREATE TABLE IF NOT EXISTS orders_positions (\n" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                    "order_id INTEGER NOT NULL REFERENCES orders,\n" +
-                    "product_id INTEGER NOT NULL,\n" +
-                    "product_category TEXT NOT NULL,\n" +
-                    "product_name TEXT NOT NULL,\n" +
-                    "product_price INTEGER NOT NULL CHECK (product_price >= 0),\n" +
-                    "product_quantity INTEGER NOT NULL DEFAULT 0 CHECK (product_quantity >= 0)" +
+            template.update(ds, "CREATE TABLE IF NOT EXISTS orders_positions (\n"
+                    +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                    +
+                    "order_id INTEGER NOT NULL REFERENCES orders,\n"
+                    +
+                    "product_id INTEGER NOT NULL,\n"
+                    +
+                    "product_category TEXT NOT NULL,\n"
+                    +
+                    "product_name TEXT NOT NULL,\n"
+                    +
+                    "product_price INTEGER NOT NULL CHECK (product_price >= 0),\n"
+                    +
+                    "product_quantity INTEGER NOT NULL DEFAULT 0 CHECK (product_quantity >= 0)"
+                    +
                     ");");
         } catch (SQLException e) {
             throw new DataAccessException(e);

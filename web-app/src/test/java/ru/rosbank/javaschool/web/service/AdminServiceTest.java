@@ -3,10 +3,9 @@ package ru.rosbank.javaschool.web.service;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import ru.rosbank.javaschool.web.constant.Constants;
-import ru.rosbank.javaschool.web.model.DrinkModel;
-import ru.rosbank.javaschool.web.model.FriesModel;
-import ru.rosbank.javaschool.web.model.ProductModel;
-import ru.rosbank.javaschool.web.model.SandwichModel;
+import ru.rosbank.javaschool.web.dto.ProductDto;
+import ru.rosbank.javaschool.web.exception.NotFoundException;
+import ru.rosbank.javaschool.web.model.*;
 import ru.rosbank.javaschool.web.repository.*;
 
 import java.util.Collections;
@@ -49,9 +48,23 @@ class AdminServiceTest {
                 "",
                 500
         );
-        val service = new AdminService(sandwichRepository,friesRepository, drinkRepository, orderRepository, orderPositionRepository);
+        ProductModel model4 = new ProductModel() {
+            @Override
+            public String getCategory() {
+                return null;
+            }
+
+            @Override
+            public ProductDto toDto() {
+                return null;
+            }
+        };
+        val service = new AdminService(sandwichRepository, friesRepository, drinkRepository, orderRepository, orderPositionRepository);
         assertNotNull(service.save(model));
         assertNotNull(service.save(model2));
+        assertNotNull(service.save(model3));
+        assertThrows(NotFoundException.class, () -> service.save(model4));
+
 
     }
 
@@ -66,9 +79,9 @@ class AdminServiceTest {
         doReturn(Optional.of(new DrinkModel())).when(drinkRepository).getById(id);
         doReturn(Optional.of(new FriesModel())).when(friesRepository).getById(id);
         doReturn(Optional.of(new SandwichModel())).when(sandwichRepository).getById(id);
-        val service = new AdminService(sandwichRepository,friesRepository, drinkRepository, orderRepository, orderPositionRepository);
+        val service = new AdminService(sandwichRepository, friesRepository, drinkRepository, orderRepository, orderPositionRepository);
         List<ProductModel> item = service.getAllProductModel();
-            assertNotNull(item);
+        assertNotNull(item);
     }
 
     @Test
@@ -82,13 +95,14 @@ class AdminServiceTest {
         doReturn(Optional.of(new DrinkModel())).when(drinkRepository).getById(id);
         doReturn(Optional.of(new FriesModel())).when(friesRepository).getById(id);
         doReturn(Optional.of(new SandwichModel())).when(sandwichRepository).getById(id);
-        val service = new AdminService(sandwichRepository,friesRepository, drinkRepository, orderRepository, orderPositionRepository);
+        val service = new AdminService(sandwichRepository, friesRepository, drinkRepository, orderRepository, orderPositionRepository);
         ProductModel item = service.getById(Constants.DRINKS, id);
         ProductModel item1 = service.getById(Constants.FRIES, id);
         ProductModel item2 = service.getById(Constants.SANDWICHES, id);
         assertNotNull(item);
         assertNotNull(item1);
         assertNotNull(item2);
+        assertThrows(NotFoundException.class, () -> service.getById(Constants.DESCRIPTION, id));
     }
 
     @Test
@@ -121,10 +135,11 @@ class AdminServiceTest {
                 "",
                 "as"
         );
-        val service = new AdminService(sandwichRepository,friesRepository, drinkRepository, orderRepository, orderPositionRepository);
+        val service = new AdminService(sandwichRepository, friesRepository, drinkRepository, orderRepository, orderPositionRepository);
 
         assertTrue(service.removeProduct(item.getCategory(), item.getId()));
         assertTrue(service.removeProduct(item1.getCategory(), item1.getId()));
         assertTrue(service.removeProduct(item2.getCategory(), item2.getId()));
+        assertFalse(service.removeProduct(Constants.DESCRIPTION, 12));
     }
 }

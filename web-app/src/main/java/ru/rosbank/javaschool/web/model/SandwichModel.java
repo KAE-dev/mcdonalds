@@ -1,13 +1,13 @@
 package ru.rosbank.javaschool.web.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ru.rosbank.javaschool.web.constant.Constants;
 import ru.rosbank.javaschool.web.dto.ProductDto;
 import ru.rosbank.javaschool.web.dto.SandwichDto;
 
-import java.awt.*;
-
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class SandwichModel extends ProductModel {

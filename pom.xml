@@ -21,6 +21,8 @@
         <tomcat-dbcp.version>9.0.27</tomcat-dbcp.version>
         <lombok.version>1.18.10</lombok.version>
         <sqlite-jdbc.version>3.28.0</sqlite-jdbc.version>
+        <junit-jupiter.version>5.5.2</junit-jupiter.version>
+        <mockito-junit-jupiter.version>3.1.0</mockito-junit-jupiter.version>
     </properties>
 
     <!--  dependencyManagement  -->
@@ -66,6 +68,18 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit-jupiter.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>${mockito-junit-jupiter.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

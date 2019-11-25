@@ -1,6 +1,4 @@
 package ru.rosbank.javaschool.web.repository;
-
-import ru.rosbank.javaschool.web.model.DrinkModel;
 import ru.rosbank.javaschool.web.model.SandwichModel;
 
 import java.util.List;

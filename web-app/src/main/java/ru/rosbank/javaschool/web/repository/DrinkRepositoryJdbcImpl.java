@@ -30,12 +30,18 @@ public class DrinkRepositoryJdbcImpl implements DrinkRepository {
         this.template = template;
 
         try {
-            template.update(ds, "CREATE TABLE IF NOT EXISTS drinks (\n" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                    "name TEXT NOT NULL, priceRub INTEGER NOT NULL CHECK (priceRub >= 0),\n" +
-                    "description Text NOT NULL,\n"+
-                    "imageUrl TEXT,\n" +
-                    "volumeMl INTEGER NOT NULL CHECK (volumeMl >= 0)\n" +
+            template.update(ds, "CREATE TABLE IF NOT EXISTS drinks (\n"
+                    +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                    +
+                    "name TEXT NOT NULL, priceRub INTEGER NOT NULL CHECK (priceRub >= 0),\n"
+                    +
+                    "description Text NOT NULL,\n"
+                    +
+                    "imageUrl TEXT,\n"
+                    +
+                    "volumeMl INTEGER NOT NULL CHECK (volumeMl >= 0)\n"
+                    +
                     ");");
         } catch (SQLException e) {
             throw new DataAccessException(e);

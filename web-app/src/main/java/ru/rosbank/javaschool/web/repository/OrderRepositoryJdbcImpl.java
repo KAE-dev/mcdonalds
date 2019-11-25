@@ -24,9 +24,12 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
         this.template = template;
 
         try {
-            template.update(ds, "CREATE TABLE IF NOT EXISTS orders (\n" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                    "isPaid INTEGER NOT NULL\n" +
+            template.update(ds, "CREATE TABLE IF NOT EXISTS orders (\n"
+                    +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                    +
+                    "isPaid INTEGER NOT NULL\n"
+                    +
                     ");");
         } catch (SQLException e) {
             throw new DataAccessException(e);
@@ -64,7 +67,6 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
                     return stmt;
                 });
                 model.setId(id);
-                return;
             } else {
                 template.update(ds, "UPDATE orders SET isPaid = ? WHERE id = ?;", stmt -> {
                     int nextIndex = 1;

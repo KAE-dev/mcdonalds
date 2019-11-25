@@ -3,7 +3,6 @@ package ru.rosbank.javaschool.web.servlet;
 import ru.rosbank.javaschool.util.SQLTemplate;
 import ru.rosbank.javaschool.web.model.*;
 import ru.rosbank.javaschool.web.repository.*;
-import ru.rosbank.javaschool.web.service.AdminService;
 import ru.rosbank.javaschool.web.service.UserService;
 
 import javax.naming.InitialContext;
@@ -39,8 +38,6 @@ public class FrontServlet extends HttpServlet {
             OrderPositionRepository orderPositionRepository = new OrderPositionRepositoryJdbcImpl(dataSource, sqlTemplate);
 
             userService = new UserService(sandwichRepository, friesRepository, drinkRepository, orderRepository, orderPositionRepository);
-            AdminService adminService = new AdminService(sandwichRepository, friesRepository, drinkRepository, orderRepository, orderPositionRepository);
-
             insertInitialData(sandwichRepository);
             insertInitialData(friesRepository);
             insertInitialData(drinkRepository);
@@ -148,8 +145,7 @@ public class FrontServlet extends HttpServlet {
                 req.setAttribute(ORDERID, orderId);
                 req.getRequestDispatcher("/WEB-INF/orderdone.jsp").forward(req, resp);
             }
-            if (req.getParameter(ACTION).startsWith((DELETE))) {
-
+            if (req.getParameter(ACTION).startsWith(DELETE)) {
                 int orderPositionModel = Integer.parseInt(req.getParameter(ACTION).substring(DELETE.length()));
                 userService.removeOrderPositionModelById(orderPositionModel);
                 resp.sendRedirect(url);

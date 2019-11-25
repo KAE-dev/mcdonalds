@@ -1,6 +1,5 @@
 package ru.rosbank.javaschool.web.repository;
 
-import ru.rosbank.javaschool.web.model.ProductModel;
 
 import java.util.List;
 import java.util.Optional;

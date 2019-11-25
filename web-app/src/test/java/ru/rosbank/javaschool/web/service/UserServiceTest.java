@@ -4,6 +4,7 @@ import lombok.val;
 import org.junit.jupiter.api.Test;
 import ru.rosbank.javaschool.web.constant.Constants;
 import ru.rosbank.javaschool.web.dto.ProductDto;
+import ru.rosbank.javaschool.web.exception.NotFoundException;
 import ru.rosbank.javaschool.web.model.*;
 import ru.rosbank.javaschool.web.repository.*;
 
@@ -57,6 +58,13 @@ class UserServiceTest {
         assertNotNull(result);
         assertNotNull(result2);
         assertNotNull(result3);
+
+        doReturn(Optional.empty()).when(drinkRepository).getById(id);
+        doReturn(Optional.empty()).when(sandwichRepository).getById(id);
+        doReturn(Optional.empty()).when(friesRepository).getById(id);
+        val service1 = new UserService(sandwichRepository,friesRepository, drinkRepository, orderRepository, orderPositionRepository);
+
+        assertThrows(NotFoundException.class, () -> service1.getById(Constants.CATEGORY, id));
     }
 
     @Test
@@ -83,7 +91,7 @@ class UserServiceTest {
         String category = Constants.FRIES;
         int id = 0;
         int quantity = 1;
-        doReturn(Optional.of(new DrinkModel())).when(drinkRepository).getById(id);
+        doReturn(Optional.of(new FriesModel())).when(friesRepository).getById(id);
         OrderPositionModel result = service.order(orderId, category, id, quantity);
         assertNotNull(result);
     }
