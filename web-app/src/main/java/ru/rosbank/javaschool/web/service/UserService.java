@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class UserMcDonaldsService {
+public class UserService {
 
   private final SandwichRepository sandwichRepository;
   private final FriesRepository friesRepository;
@@ -19,16 +19,7 @@ public class UserMcDonaldsService {
 
   private final OrderRepository orderRepository;
   private final OrderPositionRepository orderPositionRepository;
-  private List<OrderPositionModel> orderList;
-  private int total = 0;
 
-  public List<ProductModel> getAllProductModel() {
-    List<ProductModel> result = new ArrayList<>();
-    result.addAll(sandwichRepository.getAll());
-    result.addAll(friesRepository.getAll());
-    result.addAll(drinkRepository.getAll());
-    return result;
-  }
 
   public List<ProductDto> getAllProductDto() {
     List<ProductDto> result = new ArrayList<>();
@@ -48,7 +39,7 @@ public class UserMcDonaldsService {
     if (category.equals(Constants.DRINKS)) {
       return drinkRepository.getById(id).orElseThrow(NotFoundException::new);
     }
-    if (category.equals(Constants.FRENCHFRIES)) {
+    if (category.equals(Constants.FRIES)) {
       return friesRepository.getById(id).orElseThrow(NotFoundException::new);
     }
     if (category.equals(Constants.SANDWICHES)) {
@@ -63,7 +54,7 @@ public class UserMcDonaldsService {
     return model.getId();
   }
 
-  public void order(int orderId, String category, int id, int quantity) {
+  public OrderPositionModel order(int orderId, String category, int id, int quantity) {
     ProductModel productModel = this.getById(category, id);
     OrderPositionModel orderPositionModel = new OrderPositionModel(
         0,
@@ -75,53 +66,39 @@ public class UserMcDonaldsService {
         quantity
     );
     orderPositionRepository.save(orderPositionModel);
+    return orderPositionModel;
   }
 
-  public void paidOrder(int orderId, List<OrderPositionModel> orderPositionModelId) {
-      for (OrderPositionModel model : orderPositionModelId) {
-          orderPositionRepository.save(model);
-      }
+
+
+
+  public int paidOrder(int orderId) {
       orderRepository.save(new OrderModel(orderId, true));
+    return orderId;
   }
 
-  public void updateOrderPositionModel(int orderId, int orderPositionId, String category, int id, int quantity) {
-      ProductModel productModel = this.getById(category, id);
-      OrderPositionModel orderPositionModel = new OrderPositionModel(
-              orderPositionId,
-              orderId,
-              productModel.getId(),
-              productModel.getCategory(),
-              productModel.getName(),
-              productModel.getPriceRub(),
-              quantity
-      );
-      orderPositionRepository.save(orderPositionModel);
-  }
-
-  public void paidOrder(int orderId) {
-      orderRepository.save(new OrderModel(orderId, true));
-  }
-
-  public List<OrderModel> getAllOrderModel() {
-    return orderRepository.getAll();
-  }
-
-  public List<OrderPositionModel> getAllOrderPositionModel() {
-        return orderPositionRepository.getAll();
-    }
 
   public List<OrderPositionModel> getAllOrderPosition(int orderId) {
       return orderPositionRepository.getAllByOrderId(orderId);
   }
 
-  public void totalProductCounter(){
-    for (OrderPositionModel model: orderList){
-      total+=model.getProductPrice();
-    }
-
+  public OrderPositionModel updateOrderPositionModel(int orderId, int orderPositionId, String category, int id, int quantity) {
+    ProductModel productModel = this.getById(category, id);
+    OrderPositionModel orderPositionModel = new OrderPositionModel(
+            orderPositionId,
+            orderId,
+            productModel.getId(),
+            productModel.getCategory(),
+            productModel.getName(),
+            productModel.getPriceRub(),
+            quantity
+    );
+    orderPositionRepository.save(orderPositionModel);
+    return orderPositionModel;
   }
 
-  public void removeOrderPositionModelById(int idOrderPositionModel) {
+  public int removeOrderPositionModelById(int idOrderPositionModel) {
       orderPositionRepository.removeById(idOrderPositionModel);
+    return idOrderPositionModel;
   }
 }

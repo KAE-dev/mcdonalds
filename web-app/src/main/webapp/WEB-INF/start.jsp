@@ -5,7 +5,7 @@
 <%@ page import="ru.rosbank.javaschool.web.dto.SandwichDto" %>
 <%@ page import="ru.rosbank.javaschool.web.dto.FriesDto" %>
 <%@ page import="ru.rosbank.javaschool.web.model.OrderPositionModel" %>
-<%@ page import="ru.rosbank.javaschool.web.service.UserMcDonaldsService" %>
+<%@ page import="ru.rosbank.javaschool.web.service.UserService" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -15,18 +15,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Menu</title>
     <%@include file="bootstrap-css.jsp" %>
+
 </head>
 <body>
-
+<br>
+<div class="container">
 <% int orderSize = ((List<OrderPositionModel>) request.getAttribute(Constants.ORDERITEMS)).size(); %>
 
-
-<button class="btn btn-success" href="<%= request.getContextPath()%>/order" type="button">  Order <%=orderSize%></button>
-
+<a href="<%= request.getContextPath()%>/order" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true"> Order  <%=orderSize%></a>
+<br>
+<br>
 
 <div class="row">
     <% for (ProductDto item : (List<ProductDto>) request.getAttribute(Constants.DTOPRODUCTS)) { %>
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 20rem;">
         <img src="<%= item.getImageUrl() %>" class="card-img-top" alt="<%= item.getCategory() %>">
         <div class="card-body">
             <h5 class="card-title">
@@ -39,7 +41,7 @@
             </h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">Price: <%= item.getPriceRub() %> rub.</li>
-            <% if (item.getCategory().equals(Constants.FRENCHFRIES)) { %>
+            <% if (item.getCategory().equals(Constants.FRIES)) { %>
                 <li class="list-group-item">Size: <%= ((FriesDto) item).getSize() %></li>
             <% } %>
             <% if (item.getCategory().equals(Constants.DRINKS)) { %>
@@ -61,6 +63,6 @@
     </div>
     <% } %>
 </div>
-
+</div>
 </body>
 </html>

@@ -13,6 +13,6 @@ public interface FriesRepository extends ProductRepository<FriesModel> {
 
     void save(FriesModel model);
 
-    void removeById(int id);
+   void removeById(int id);
 
 }

@@ -73,19 +73,19 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/coursar/rosbank-starter</url>
+            <url>https://maven.pkg.github.com/KAE-dev/mcdonalds</url>
         </repository>
     </distributionManagement>
 
     <repositories>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/coursar/rosbank-starter</url>
+            <url>https://maven.pkg.github.com/KAE-dev/mcdonalds</url>
         </repository>
     </repositories>
 
     <modules>
-        <module>sql-template</module>
+        <module>sql-temp</module>
         <module>web-app</module>
     </modules>
 </project>

@@ -15,7 +15,7 @@
 <body>
 
 <div class="container">
-  <h1>Something bad happened</h1>
+  <img src="https://i.ytimg.com/vi/mhHhS5e_2dg/maxresdefault.jpg">
 </div>
 
 </body>

@@ -10,7 +10,7 @@ import ru.rosbank.javaschool.web.dto.ProductDto;
 @NoArgsConstructor
 public class FriesModel extends ProductModel{
 
-    private static final String CATEGORY = Constants.FRENCHFRIES;
+    private static final String CATEGORY = Constants.FRIES;
     private String size;
 
     public FriesModel(int id, String name, int priceRub, String description, String imageUrl, String size) {

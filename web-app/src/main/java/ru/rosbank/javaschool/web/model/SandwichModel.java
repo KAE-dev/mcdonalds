@@ -2,14 +2,17 @@ package ru.rosbank.javaschool.web.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.rosbank.javaschool.web.constant.Constants;
 import ru.rosbank.javaschool.web.dto.ProductDto;
 import ru.rosbank.javaschool.web.dto.SandwichDto;
+
+import java.awt.*;
 
 @Data
 @NoArgsConstructor
 public class SandwichModel extends ProductModel {
 
-    private static final String CATEGORY = "Sandwich";
+    private static final String CATEGORY = Constants.SANDWICHES;
 
     public SandwichModel(int id, String name, int priceRub, String description, String imageUrl) {
         super(id, name, priceRub, description, imageUrl);

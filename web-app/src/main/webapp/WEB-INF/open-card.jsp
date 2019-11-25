@@ -10,18 +10,17 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>About product</title>
+    <title>Details</title>
     <%@include file="bootstrap-css.jsp" %>
 </head>
 <body>
-
+<div class="container">
 <% ProductModel model = (ProductModel) request.getAttribute(Constants.PRODUCT); %>
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Back</a></li>
-    </ol>
-</nav>
+<br>
+        <a href="/">Back</a>
+<br>
+
 
 <div align="center">
     <div class="card mb-3" style="max-width: 540px;">
@@ -39,7 +38,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Category: <%= model.getCategory() %></li>
                     <li class="list-group-item">Price: <%= model.getPriceRub() %> rub.</li>
-                    <% if (model.getCategory().equals(Constants.FRENCHFRIES)) { %>
+                    <% if (model.getCategory().equals(Constants.FRIES)) { %>
                     <li class="list-group-item">Size: <%= ((FriesModel) model).getSize() %></li>
                     <% } %>
                     <% if (model.getCategory().equals(Constants.DRINKS)) { %>
@@ -50,6 +49,6 @@
         </div>
     </div>
 </div>
-
+</div>
 </body>
 </html>

@@ -8,7 +8,7 @@ import ru.rosbank.javaschool.web.constant.Constants;
 @NoArgsConstructor
 public class FriesDto extends ProductDto {
 
-    private static final String CATEGORY = Constants.FRENCHFRIES;
+    private static final String CATEGORY = Constants.FRIES;
     private String size;
 
     public FriesDto(int id, String name, int priceRub, String imageUrl, String size) {
